@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import Navbar from "./Navbar";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -26,9 +27,14 @@ const ProductList = () => {
       console.error("Error deleting product:", error);
     }
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
 
   return (
     <div className="container mt-5">
+        <Navbar />
       <h2>Daftar Produk</h2>
       <table className="table table-bordered">
         <thead>
@@ -62,8 +68,13 @@ const ProductList = () => {
           ))}
         </tbody>
       </table>
+
+      <button onClick={handleLogout} className="btn btn-danger">
+        Logout
+      </button>
     </div>
   );
 };
 
 export default ProductList;
+
